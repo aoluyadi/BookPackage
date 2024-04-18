@@ -1,7 +1,6 @@
 library(rvest)
 goodreads <- rvest::read_html("https://www.goodreads.com/list/show/1.Best_Books_Ever")
 
-
 Df_title <- goodreads |>
   html_elements("div h1") |>
   html_text2()
