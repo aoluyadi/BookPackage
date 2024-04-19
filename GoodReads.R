@@ -28,7 +28,7 @@ rating_chunk
 
 cover <- goodreads|>
   html_elements(".bookCover") |>
-  html_text2()
+  html_attr("src")
 cover
 
 
