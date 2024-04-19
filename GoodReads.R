@@ -54,6 +54,18 @@ goodreads_df <- data.frame(
 # Clean colunm titles
 colnames(goodreads_df) <- c("Rank", "Cover", "Book Names", "Author", "Average Rating", "Total Rating")
 
+# Extract series name from title column
+goodreads_df <- goodreads_df |>
+  mutate(
+    Series = str_extract(book_names, "\\(.*?\\)"),
+    Series = ifelse(is.na(Series), NA, str_replace_all(Series, "\\(|\\)", "")),
+    `Book Names` = str_replace(book_names, "\\(.*?\\)", "")
+  )
+
+# rearrange columns
+goodreads_df <- goodreads_df[, c(1:3, 7, 4:6)]
+goodreads_df
+
 
 
 
