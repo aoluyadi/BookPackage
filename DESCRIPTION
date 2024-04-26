@@ -1,11 +1,15 @@
-Package: Book Package
-Title: An R package for browising the "best" books of various genres from Goodreads. 
+Package: GoodReads
+Title: An R package for browsing the "best" books of various genres from Goodreads Listopia. 
 Version: 0.0.0.9000
 Authors@R: 
-    person("Ayomikun", "Oluyadi", , "Kylie","Peters-Liverpool", , "Xiomara", "Dominguez" , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description:  An R package for browising the "best" books of various genres from Goodreads.
+    person("Ayomikun", "Oluyadi", , "Kylie","Peters-Liverpool", , "Xiomara", "Dominguez" , , "xdominguez@smith.edu", 
+    role = c("aut", "cre"))
+Description: An R package for browising the "best" books of various genres from Goodreads.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
+Imports: 
+    dplyr,
+    rvest,
+    stringr
