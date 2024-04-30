@@ -91,7 +91,7 @@ book_details <- function(url) {
   )
 
   # Clean column titles
-  colnames(goodreads_df) <- c("Rank", "Book Names", "Author", "Average Rating", "Total Rating", "Cover ID")
+  colnames(goodreads_df) <- c("Rank", "Book Names", "Author", "Series", "Average Rating", "Total Rating", "Cover ID")
 
   # Extract series name from title column
   goodreads_df <- goodreads_df |>
