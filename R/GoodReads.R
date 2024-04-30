@@ -9,6 +9,8 @@
 #' @importFrom rvest html_attr
 #' @importFrom rvest html_text
 #' @importFrom stringr str_extract
+#' @importFrom stringr str_replace_all
+#' @importFrom stringr str_replace
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select
 #'
@@ -21,52 +23,51 @@
 #' * Author: Character vector that contains the names of the authors of the books.
 #' * Average Rating: Character vector that represents the average rating of the books.
 #' * Total Rating: Character vector that represents the total number of ratings for each book.
+#' * Cover ID: Character vector that represents the book code needed to generate a cover image using the book_cover function.
 #'
 #' @examples
-#' Best_Books_Ever <- book_details(“https://www.goodreads.com/list/show/1.Best_Books_Ever”)
+#' Best_Books_Ever <- book_details("https://www.goodreads.com/list/show/1.Best_Books_Ever")
 #' print(Best_Books_Ever)
 #'
-#' GoodReads Listopia Web page: ("https://www.goodreads.com/list/show/1.Best_Books_Ever")
-#' Go to this link to find URLs for other book compilations you're interested in turning into a dataset.
 #'
 #' @export
 #'
 book_details <- function(url) {
-  goodreads <- read_html(url)
+  goodreads <- rvest::read_html(url)
 
   # Extracting book details from goodreads website
   Df_title <- goodreads |>
-    html_elements(".gr-h1--serif") |>
-    html_text2()
+    rvest::html_elements(".gr-h1--serif") |>
+    rvest::html_text2()
   Df_title
 
   book_names <- goodreads|>
-    html_elements(".bookTitle span") |>
-    html_text2()
+    rvest::html_elements(".bookTitle span") |>
+    rvest::html_text2()
   book_names
 
   rank <- goodreads|>
-    html_elements(".number") |>
-    html_text2()
+    rvest::html_elements(".number") |>
+    rvest::html_text2()
   rank
 
   author <- goodreads|>
-    html_elements(".authorName span") |>
-    html_text2()
+    rvest::html_elements(".authorName span") |>
+    rvest::html_text2()
   author
 
   cover <- goodreads|>
-    html_elements(".bookCover") |>
-    html_attr("src")
+    rvest::html_elements(".bookCover") |>
+    rvest::html_attr("src")
   cover
 
   cover <- cover |>
-    str_extract("\\d+i/\\d+")
+    stringr::str_extract("\\d+i/\\d+")
   cover
 
   rating_chunk <- goodreads|>
-    html_elements(".minirating") |>
-    html_text()
+    rvest::html_elements(".minirating") |>
+    rvest::html_text()
 
   # Cleaning rating chunk
   avg_rating <- rating_chunk|>
@@ -77,6 +78,7 @@ book_details <- function(url) {
     stringr::str_extract("\\d+\\.?,*\\d+\\.?,*\\d*(?=\\s*ratings)")
   total_rating
 
+
   # Constructing data frame
   goodreads_df <- data.frame(
     `Rank` = rank,
@@ -84,11 +86,12 @@ book_details <- function(url) {
     `Author` = author,
     `Average Rating` = avg_rating,
     `Total Rating` = total_rating,
+    `Cover ID` = cover,
     stringsAsFactors = FALSE
   )
 
   # Clean column titles
-  colnames(goodreads_df) <- c("Rank", "Book Names", "Author", "Average Rating", "Total Rating")
+  colnames(goodreads_df) <- c("Rank", "Book Names", "Author", "Average Rating", "Total Rating", "Cover ID")
 
   # Extract series name from title column
   goodreads_df <- goodreads_df |>
@@ -96,11 +99,10 @@ book_details <- function(url) {
       Series = str_extract(book_names, "\\(.*?\\)"),
       Series = ifelse(is.na(Series), NA, str_replace_all(Series, "\\(|\\)", "")),
       `Book Names` = str_replace(book_names, "\\(.*?\\)", "")
-    ) |>
-    select(Rank, `Book Names`, Series, Author, `Average Rating`, `Total Rating`)
+    )
 
   # rearrange columns
-  goodreads_df <- goodreads_df[, c(1:3, 6, 4:5)]
+  goodreads_df <- goodreads_df[, c(1:3, 7, 4:6)]
 
   return(goodreads_df)
 }
@@ -113,16 +115,19 @@ book_details <- function(url) {
 #'
 #' @importFrom magick image_read
 #'
+#' @param data The dataframe produced from using the book_details funtion.
 #' @param book_rank The rank of the specific book in the dataset.
 #'
 #' @examples
-#' Best_Books_Ever <- book_details(“https://www.goodreads.com/list/show/1.Best_Books_Ever”)
+#' Best_Books_Ever <- book_details("https://www.goodreads.com/list/show/1.Best_Books_Ever")
 #' print(Best_Books_Ever)
-#' book_cover(2)
+#' book_cover(Best_Books_Ever, 2)
 #'
 #' @export
 #'
-book_cover <- function(book_rank) {
+book_cover <- function(data, book_rank) {
+
+  cover <- data$`Cover ID`
   book_rank <- as.numeric(book_rank)
 
   # Iterating over 'cover' to the appropriate url for each cover image
@@ -137,7 +142,7 @@ book_cover <- function(book_rank) {
 
   for (i in seq_along(cover_urls)) {
     # Now 'images_list' contains all the images read from the URLs
-    images_list[[i]] <- image_read(cover_urls[[i]])
+    images_list[[i]] <- magick::image_read(cover_urls[[i]])
 
   }
 
