@@ -9,6 +9,7 @@
 #' @importFrom rvest html_attr
 #' @importFrom rvest html_text
 #' @importFrom stringr str_extract
+#' @importFrom stringr str_replace_all
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select
 #'

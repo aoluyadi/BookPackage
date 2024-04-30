@@ -56,12 +56,13 @@ goodreads_df <- data.frame(
   `Author` = author,
   `Average Rating` = avg_rating,
   `Total Rating` = total_rating,
+  `Cover ID` = cover,
   stringsAsFactors = FALSE
 )
 
 
 # Clean column titles
-colnames(goodreads_df) <- c("Rank", "Book Names", "Author", "Average Rating", "Total Rating")
+colnames(goodreads_df) <- c("Rank", "Book Names", "Author", "Average Rating", "Total Rating", "Cover ID")
 
 # Extract series name from title column
 bestbooksever_df <- goodreads_df |>
@@ -72,7 +73,7 @@ bestbooksever_df <- goodreads_df |>
   )
 
 # rearrange columns
-bestbooksever_df <- bestbooksever_df[, c(1:3, 6, 4:5)]
-
+bestbooksever_df <- bestbooksever_df[, c(1:3, 7, 4:6)]
+rm(goodreads_df)
 
 usethis::use_data(bestbooksever_df, overwrite = TRUE)

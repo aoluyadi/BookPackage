@@ -18,8 +18,15 @@ A dataframe containing information extracted from the provided web link about th
 \item Author: Character vector that contains the names of the authors of the books.
 \item Average Rating: Character vector that represents the average rating of the books.
 \item Total Rating: Character vector that represents the total number of ratings for each book.
+\item Cover ID: Character vector that represents the book code needed to generate a cover image using the book_cover function.
 }
 }
 \description{
 This function takes a URL from Goodreads Listopia and creates a data frame that includes information about the listed books through web scraping.
+}
+\examples{
+Best_Books_Ever <- book_details("https://www.goodreads.com/list/show/1.Best_Books_Ever")
+print(Best_Books_Ever)
+
+
 }

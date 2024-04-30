@@ -2,9 +2,9 @@ Package: GoodReads
 Title: Browse the "best" books of various genres from Goodreads Listopia. 
 Version: 0.0.0.9000
 Authors@R: 
-    person("Ayomikun", "Oluyadi", , "oluyadi@smith.edu", role = c("aut", "cre"),
-    person("Xiomara", "Dominguez",, "xdominguez@smith.edu", role = c("aut", "cre"),
-    person("Kylie", "Peters-Liverpool",, "kpetersliverpool@smith.edu", role = c("aut", "cre")))
+    c(person("Ayomikun", "Oluyadi", , "oluyadi@smith.edu", role = c("aut", "cre"),
+    person("Xiomara", "Dominguez", , "xdominguez@smith.edu", role = "aut",
+    person("Kylie", "Peters-Liverpool", , "kpetersliverpool@smith.edu", role = "aut"))))
 Description: An R package for browising the "best" books of various genres from Goodreads.
 License: MIT + file LICENSE
 Encoding: UTF-8
