@@ -4,7 +4,21 @@
 library(rvest)
 library(dplyr)
 library(stringr)
-goodreads <- rvest::read_html("https://www.goodreads.com/list/show/1.Best_Books_Ever")
+library(chromote)
+library(methods)
+
+url <- "https://www.goodreads.com/list/show/1.Best_Books_Ever"
+
+b <- ChromoteSession$new()
+b$Network$setUserAgentOverride(userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
+
+{
+  b$Page$navigate(url)
+  b$Page$loadEventFired()
+}
+url <- b$Runtime$evaluate("document.querySelector('html').outerHTML")$result$value
+
+goodreads <- rvest::read_html(url)
 
 # Extracting book details from goodreads website
 Df_title <- goodreads |>

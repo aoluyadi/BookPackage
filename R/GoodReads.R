@@ -91,7 +91,7 @@ book_details <- function(url) {
   )
 
   # Clean column titles
-  colnames(goodreads_df) <- c("Rank", "Book Names", "Author", "Series", "Average Rating", "Total Rating", "Cover ID")
+  colnames(goodreads_df) <- c("Rank", "Book Names", "Author", "Average Rating", "Total Rating", "Cover ID")
 
   # Extract series name from title column
   goodreads_df <- goodreads_df |>
@@ -127,31 +127,24 @@ book_details <- function(url) {
 #'
 book_cover <- function(data, book_rank) {
 
-  cover <- data$`Cover ID`
+  cover <- data$`Cover ID`[[book_rank]]
+
   book_rank <- as.numeric(book_rank)
 
   # Iterating over 'cover' to the appropriate url for each cover image
-  cover_urls <- c()
-  for (i in 1:length(cover)) {
-    urls <- paste0("https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/", cover[[i]], ".jpg")
-    cover_urls[[i]] <- urls
-  }
+  cover_url <- c()
+  cover_url <- paste0("https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/", cover_url, ".jpg")
 
-  # Iterating over the list of urls to get a list of image covers
-  images_list <- list()
+  # Get the image from the url
+  image <- magick::image_read(cover_url)
 
-  for (i in seq_along(cover_urls)) {
-    # Now 'images_list' contains all the images read from the URLs
-    images_list[[i]] <- magick::image_read(cover_urls[[i]])
-
-  }
 
   # Returning the book cover as an image once a book rank has been provided as a numeric value
   if (is.numeric(book_rank) == TRUE ){
-    images_list[[book_rank]]
-  }
-  else {
+    image[[book_rank]]
+  } else {
     stop("Rank must be a single numeric value")
   }
 }
+
 
