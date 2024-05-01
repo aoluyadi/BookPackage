@@ -23,21 +23,21 @@ Here’s an example of how to accomplish this. First, load the `GoodReads` packa
 library(GoodReads)
 ```
 
-Then, use the `book_details()` to retrieve information about a particular book and their ranking within a specific category in good reads. Here lets retrieve the Best Historical Fiction.
+Then, use the `book_details()` to retrieve information about a particular book and their ranking within a specific category in good reads. Here lets retrieve the Best Young Adult Books.
 
 ```{r}
-book_details("https://www.goodreads.com/list/show/43.Best_Young_Adult_Books")
+Best_YA_Booksdf <- GoodReads::book_details("https://www.goodreads.com/list/show/43.Best_Young_Adult_Books")
 ```
 
-The object that is returned is book info date set: book name, rank, author, cover, and ranking chunk. This provides you with the rank information that is then used directly as an argument for book_cover. `book_cover()` allows you to view the book cover images. Here is the code to load the cover for Harry Potter and Sorcerer’s Stone (Harry Potter, #1). 
+The object that is returned is book info date set: rank, book names, author, series, average rating, total rating and cover id. This provides you with the rank information that is then used directly as an argument for book_cover. `book_cover()` allows you to view the book cover images. Here is the code to load the cover for Harry Potter and Sorcerer’s Stone (Harry Potter, #1). 
 
 ```{r}
-book_cover(1)
+book_cover(Best_YA_Booksdf, 1)
 ```
 
 ## GoodReads Best Books Ever Data 
 The GoodReads package also comes with a built-in data set describing the 100 best books ever published on the GoodReads website. This can be viewed by loading:
 
 ```{r}
-GoodReads:: bestbooksever_df
+GoodReads::bestbooksever_df
 ```

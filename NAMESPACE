@@ -2,9 +2,11 @@
 
 export(book_cover)
 export(book_details)
+importFrom(chromote,ChromoteSession)
 importFrom(dplyr,mutate)
 importFrom(dplyr,select)
 importFrom(magick,image_read)
+importFrom(methods,new)
 importFrom(rvest,html_attr)
 importFrom(rvest,html_elements)
 importFrom(rvest,html_text)
