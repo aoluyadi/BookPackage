@@ -38,6 +38,9 @@ book_details <- function(url) {
 
   # new session, set userAgent to prevent 403 forbidden error
   b <- chromote::ChromoteSession$new()
+  {
+  dir(tempdir(), pattern = "chrome-")
+  }
   b$Network$setUserAgentOverride(userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
 
   {
