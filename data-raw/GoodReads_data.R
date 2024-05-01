@@ -9,7 +9,7 @@ library(methods)
 
 url <- "https://www.goodreads.com/list/show/1.Best_Books_Ever"
 
-b <- ChromoteSession$new()
+b <- chromote::ChromoteSession$new()
 b$Network$setUserAgentOverride(userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
 
 {

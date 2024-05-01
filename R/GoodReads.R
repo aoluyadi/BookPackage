@@ -13,6 +13,8 @@
 #' @importFrom stringr str_replace
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select
+#' @importFrom chromote ChromoteSession
+#' @importFrom methods new
 #'
 #' @param url The url of the specific Goodreads Listopia webpage.
 #'
@@ -33,6 +35,17 @@
 #' @export
 #'
 book_details <- function(url) {
+
+  # new session, set userAgent to prevent 403 forbidden error
+  b <- chromote::ChromoteSession$new()
+  b$Network$setUserAgentOverride(userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
+
+  {
+    b$Page$navigate(url)
+    b$Page$loadEventFired()
+  }
+  url <- b$Runtime$evaluate("document.querySelector('html').outerHTML")$result$value
+
   goodreads <- rvest::read_html(url)
 
   # Extracting book details from goodreads website
@@ -127,24 +140,24 @@ book_details <- function(url) {
 #'
 book_cover <- function(data, book_rank) {
 
-  cover <- data$`Cover ID`[[book_rank]]
-
-  book_rank <- as.numeric(book_rank)
-
-  # Iterating over 'cover' to the appropriate url for each cover image
-  cover_url <- c()
-  cover_url <- paste0("https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/", cover_url, ".jpg")
-
-  # Get the image from the url
-  image <- magick::image_read(cover_url)
-
-
-  # Returning the book cover as an image once a book rank has been provided as a numeric value
   if (is.numeric(book_rank) == TRUE ){
-    image[[book_rank]]
+    cover_id <- data$`Cover ID`[book_rank]
   } else {
     stop("Rank must be a single numeric value")
   }
+
+  if (is.na(cover_id)) {
+    stop("Invalid book rank provided.")
+  }
+
+  # Constructing the cover URL
+  cover_url <- paste0("https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/", cover_id, ".jpg")
+
+  # Reading the image from the URL
+  book_cover_image <- magick::image_read(cover_url)
+
+  # Returning the book cover as an image once a book rank has been provided as a numeric value
+  return(book_cover_image)
 }
 
 
