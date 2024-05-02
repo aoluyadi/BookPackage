@@ -8,7 +8,7 @@
 
 The `GoodReads` package lets you webscrape a book lists information from
 [GoodReads Listopia](https://www.goodreads.com/list/tag/best). The
-package alo allows you to plot the cover of a book from its given rank.
+package also allows you to plot the cover of a book from its given rank.
 
 ## Installation
 
@@ -27,12 +27,12 @@ webscrapes information for the first 100 books.
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how utilize the functions:
 
 ``` r
 library(GoodReads)
 
 Best_Books_Everdf <- book_details("https://www.goodreads.com/list/show/1.Best_Books_Ever")
 
-Hunger_Games <- book_cover(Best_Books_Everdf, 1)
+book_cover(Best_Books_Everdf, 1)
 ```
