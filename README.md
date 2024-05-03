@@ -27,7 +27,7 @@ webscrapes information for the first 100 books.
 
 ## Example
 
-This is a basic example which shows you how utilize the functions:
+This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(GoodReads)
@@ -36,3 +36,5 @@ Best_Books_Everdf <- book_details("https://www.goodreads.com/list/show/1.Best_Bo
 
 book_cover(Best_Books_Everdf, 1)
 ```
+
+<img src="man/figures/README-example-1.png" width="100%" />
