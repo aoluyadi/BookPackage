@@ -16,14 +16,14 @@ knitr::opts_chunk$set(
 
 ## Browsing GoodReads books 
 
-The main function of the GoodReads package is to let you browse books from the GoodReads website. This function uses the best books ever category as an example data frame and  provides you with links to web scrape and create more comprehensible data frames within r  to browse numerous book categories from the listopia from good reads. 
+The main function of the GoodReads package is to let you browse books from the GoodReads website. This function uses the best books ever category as an example data frame and provides you with links to web scrape and create more comprehensible data frames within r to browse numerous book categories from the listopia from good reads found using this url link:[Goodreads Listopia]("https://www.goodreads.com/list/tag/best"). 
 Here’s an example of how to accomplish this. First, load the `GoodReads` package.
 
 ```{r setup}
 library(GoodReads)
 ```
 
-Then, use the `book_details()` to retrieve information about a particular book and their ranking within a specific category in good reads. Here lets retrieve the Best Young Adult Books.
+Then, use the `book_details()` to retrieve information about a particular book and their ranking within a specific category in good reads. Here lets retrieve the Best Young Adult Books category.
 
 ```{r}
 Best_YA_Booksdf <- GoodReads::book_details("https://www.goodreads.com/list/show/43.Best_Young_Adult_Books")
