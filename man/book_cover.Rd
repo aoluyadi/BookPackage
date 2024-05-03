@@ -7,7 +7,7 @@
 book_cover(data, book_rank)
 }
 \arguments{
-\item{data}{The dataframe produced from using the book_details funtion.}
+\item{data}{The dataframe produced from using the book_details function.}
 
 \item{book_rank}{The rank of the specific book in the dataset.}
 }

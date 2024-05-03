@@ -36,6 +36,15 @@
 #'
 book_details <- function(url) {
 
+  response <- try(httr::HEAD(url), silent = TRUE)
+
+  # Check if the request was successful
+  if (inherits(response, "try-error") || httr::http_error(response)) {
+    stop("The provided URL is not valid or reachable.")
+  } else {
+    message("The provided URL is valid.")
+  }
+
   # new session, set userAgent to prevent 403 forbidden error
   b <- chromote::ChromoteSession$new()
   {
@@ -131,7 +140,7 @@ book_details <- function(url) {
 #'
 #' @importFrom magick image_read
 #'
-#' @param data The dataframe produced from using the book_details funtion.
+#' @param data The dataframe produced from using the book_details function.
 #' @param book_rank The rank of the specific book in the dataset.
 #'
 #' @examples
@@ -150,7 +159,7 @@ book_cover <- function(data, book_rank) {
   }
 
   if (is.na(cover_id)) {
-    stop("Invalid book rank provided.")
+    stop("Invalid book rank provided. Book rank value must be greater than 0 and less than/equal to a 100")
   }
 
   # Constructing the cover URL
