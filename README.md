@@ -4,6 +4,8 @@
 # GoodReads
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/aoluyadi/BookPackage/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/aoluyadi/BookPackage/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The `GoodReads` package lets you webscrape a book lists information from
@@ -33,6 +35,7 @@ This is a basic example which shows you how to solve a common problem:
 library(GoodReads)
 
 Best_Books_Everdf <- book_details("https://www.goodreads.com/list/show/1.Best_Books_Ever")
+#> The provided URL is valid.
 
 book_cover(Best_Books_Everdf, 1)
 ```
