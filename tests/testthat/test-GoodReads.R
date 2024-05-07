@@ -13,4 +13,7 @@ test_that("check that book_cover plots image", {
   vdiffr::expect_doppelganger(
     title = "Hunger games book cover",
     fig = book_cover(bestbooksever_df, 1))
+  })
+test_that("doesn't take multiple arguments", {
+  expect_error(book_cover(bestbooksever_df, 1:10))
 })
