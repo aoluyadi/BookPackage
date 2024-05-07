@@ -35,30 +35,13 @@
 #' @export
 #'
 book_details <- function(url) {
-
-  response <- try(httr::HEAD(url), silent = TRUE)
-
+  goodreads <- try(rvest::read_html(url))
   # Check if the request was successful
-  if (inherits(response, "try-error") || httr::http_error(response)) {
-    stop("The provided URL is not valid or reachable.")
-  } else {
-    message("The provided URL is valid.")
-  }
-
-  # new session, set userAgent to prevent 403 forbidden error
-  b <- chromote::ChromoteSession$new()
-  {
-  dir(tempdir(), pattern = "chrome-")
-  }
-  b$Network$setUserAgentOverride(userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
-
-  {
-    b$Page$navigate(url)
-    b$Page$loadEventFired()
-  }
-  url <- b$Runtime$evaluate("document.querySelector('html').outerHTML")$result$value
-
-  goodreads <- rvest::read_html(url)
+   if (inherits(goodreads, "try-error")) {
+     stop("The provided URL is not valid or reachable.")
+   } else {
+     message("The provided URL is valid.")
+   }
 
   # Extracting book details from goodreads website
   Df_title <- goodreads |>
