@@ -122,7 +122,6 @@ book_details <- function(url) {
   return(goodreads_df)
 }
 
-
 #' @title Visualize cover image.
 #'
 #' @description

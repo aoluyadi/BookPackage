@@ -2,7 +2,8 @@
 % Please edit documentation in R/GoodReads.R
 \name{book_details}
 \alias{book_details}
-\title{Construct a dataframe using a particular Best Books list from Goodreads’s Listopia.}
+\title{Construct a dataframe using a particular Best Books list from
+Goodreads’s Listopia.}
 \usage{
 book_details(url)
 }
@@ -10,19 +11,27 @@ book_details(url)
 \item{url}{The url of the specific Goodreads Listopia webpage.}
 }
 \value{
-A dataframe containing information extracted from the provided web link about the listed books.
+A dataframe containing information extracted from the provided web
+link about the listed books.
 \itemize{
 \item Rank: Character vector with rank of the book in the list.
 \item Book Names: Character vector with the name of the book.
-\item Series: Character vector that when a book belongs to a series, it extracts the series name  and returns NA if not.
-\item Author: Character vector that contains the names of the authors of the books.
-\item Average Rating: Character vector that represents the average rating of the books.
-\item Total Rating: Character vector that represents the total number of ratings for each book.
-\item Cover ID: Character vector that represents the book code needed to generate a cover image using the book_cover function.
+\item Series: Character vector that when a book belongs to a series, it extracts
+the series name  and returns NA if not.
+\item Author: Character vector that contains the names of the authors of
+the books.
+\item Average Rating: Character vector that represents the average rating of the
+books.
+\item Total Rating: Character vector that represents the total number of ratings
+for each book.
+\item Cover ID: Character vector that represents the book code needed to
+generate a cover image using the book_cover function.
 }
 }
 \description{
-This function takes a URL from Goodreads Listopia and creates a data frame that includes information about the listed books through web scraping.
+This function takes a URL from Goodreads Listopia and creates a
+data frame that includes information about the listed books through web
+scraping.
 }
 \examples{
 Best_Books_Ever <- book_details("https://www.goodreads.com/list/show/1.Best_Books_Ever")

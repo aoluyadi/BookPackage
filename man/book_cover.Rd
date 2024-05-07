@@ -12,7 +12,8 @@ book_cover(data, book_rank)
 \item{book_rank}{The rank of the specific book in the dataset.}
 }
 \description{
-Given the \code{rank} of a book, this function retrieves the the cover image and visualizes it.
+Given the \code{rank} of a book, this function retrieves the the cover image and
+visualizes it.
 }
 \examples{
 Best_Books_Ever <- book_details("https://www.goodreads.com/list/show/1.Best_Books_Ever")
