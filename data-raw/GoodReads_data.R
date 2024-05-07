@@ -1,22 +1,10 @@
 ## code to prepare `GoodReads_data` dataset goes here
-
-
 library(rvest)
 library(dplyr)
 library(stringr)
-library(chromote)
 library(methods)
 
 url <- "https://www.goodreads.com/list/show/1.Best_Books_Ever"
-
-b <- chromote::ChromoteSession$new()
-b$Network$setUserAgentOverride(userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
-
-{
-  b$Page$navigate(url)
-  b$Page$loadEventFired()
-}
-url <- b$Runtime$evaluate("document.querySelector('html').outerHTML")$result$value
 
 goodreads <- rvest::read_html(url)
 
@@ -26,22 +14,22 @@ Df_title <- goodreads |>
   html_text2()
 Df_title
 
-book_names <- goodreads|>
+book_names <- goodreads |>
   html_elements(".bookTitle span") |>
   html_text2()
 book_names
 
-rank <- goodreads|>
+rank <- goodreads |>
   html_elements(".number") |>
   html_text2()
 rank
 
-author <- goodreads|>
+author <- goodreads |>
   html_elements(".authorName span") |>
   html_text2()
 author
 
-cover <- goodreads|>
+cover <- goodreads |>
   html_elements(".bookCover") |>
   html_attr("src")
 cover
@@ -50,16 +38,16 @@ cover <- cover |>
   str_extract("\\d+i/\\d+")
 cover
 
-rating_chunk <- goodreads|>
+rating_chunk <- goodreads |>
   html_elements(".minirating") |>
   html_text()
 
 # Cleaning rating chunk
-avg_rating <- rating_chunk|>
+avg_rating <- rating_chunk |>
   stringr::str_extract("\\d+\\.\\d{2}")
 avg_rating
 
-total_rating <- rating_chunk|>
+total_rating <- rating_chunk |>
   stringr::str_extract("\\d+\\.?,*\\d+\\.?,*\\d*(?=\\s*ratings)")
 total_rating
 
@@ -76,7 +64,8 @@ goodreads_df <- data.frame(
 
 
 # Clean column titles
-colnames(goodreads_df) <- c("Rank", "Book Names", "Author", "Average Rating", "Total Rating", "Cover ID")
+colnames(goodreads_df) <- c("Rank", "Book Names", "Author", "Average Rating",
+                            "Total Rating", "Cover ID")
 
 # Extract series name from title column
 bestbooksever_df <- goodreads_df |>
